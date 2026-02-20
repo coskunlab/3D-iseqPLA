@@ -28,15 +28,21 @@ sns.set_context("notebook", font_scale=1.5)
 # ## 1. Setup Directories and Load Plate Layout
 
 # %%
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # --- USER INPUTS ---
 # Path to the plate layout Excel file
-layout_file = r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\01-3T3 P11 24 well plate 021\Plate021_layout.xlsx"
+layout_file = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '01-3T3 P11 24 well plate 021' / 'Plate021_layout.xlsx'
 
 # Path to PKL files directory
-pkl_path = Path(r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\01-3T3 P11 24 well plate 021\26Dec2025 cycle 3 PLA\10 PKL single cell")
+pkl_path = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '01-3T3 P11 24 well plate 021' / '26Dec2025 cycle 3 PLA' / '10 PKL single cell'
 
 # Output directory for plots
-plot_output_dir = Path(r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\01-3T3 P11 24 well plate 021\26Dec2025 cycle 3 PLA\11 PNG plots")
+plot_output_dir = FIGURES_ROOT / '90_plot_p65_activation_plate021'
 plot_output_dir.mkdir(exist_ok=True, parents=True)
 
 print(f"PKL files directory: {pkl_path}")

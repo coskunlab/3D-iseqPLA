@@ -16,13 +16,19 @@ from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # Configuration
 SEED = 42
 
 # Paths
-base_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model')
+base_dir = DATA_ROOT / '71 CF AI Foundation model'
 model_dir = base_dir / 'Models' / 'scGPT' / 'invivo'
-plot_dir = base_dir / 'Figures' / 'in_vivo_model_performance'
+plot_dir = FIGURES_ROOT / '44_in_vivo_model_performance'
 plot_dir.mkdir(parents=True, exist_ok=True)
 
 print("="*100)

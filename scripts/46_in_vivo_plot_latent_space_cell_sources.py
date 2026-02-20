@@ -41,15 +41,21 @@ except ImportError:
 
 from sklearn.manifold import TSNE
 
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # Configuration
 SEED = 42
 set_seed(SEED)
 
 # Paths
-base_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model')
+base_dir = DATA_ROOT / '71 CF AI Foundation model'
 model_dir = base_dir / 'Models' / 'scGPT' / 'invivo'
 prepared_data_dir = base_dir / 'Data' / 'Prepared_for_Training'
-output_dir = base_dir / 'Figures' / 'invivo_cell_latent_space'
+output_dir = FIGURES_ROOT / '46_in_vivo_plot_latent_space_cell_sources'
 output_dir.mkdir(parents=True, exist_ok=True)
 
 # Model parameters (must match script 35)

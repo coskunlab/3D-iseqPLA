@@ -30,6 +30,12 @@ except ImportError as e:
     print(f"✗ Error importing scGPT: {e}")
     sys.exit(1)
 
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # Configuration
 SEED = 42
 BATCH_SIZE = 8
@@ -37,8 +43,8 @@ MAX_SEQ_LEN = 1200
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Paths
-model_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Models/scGPT/multispecies')
-plot_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Figures/in_vitro_model_performance')
+model_dir = DATA_ROOT / '71 CF AI Foundation model' / 'Models' / 'scGPT' / 'multispecies'
+plot_dir = FIGURES_ROOT / '37_plot_in_vitro_model_performance'
 plot_dir.mkdir(parents=True, exist_ok=True)
 
 # Model configuration (must match training)
@@ -71,7 +77,7 @@ print("="*100)
 from sklearn.model_selection import train_test_split
 
 # Load original data
-data_file = Path('/coskun-lab/Nicky/71 CF AI Foundation model/Data/00 In Vitro RAW/converted_anndata/scGPT_multispecies_training_corpus.h5ad')
+data_file = DATA_ROOT / '71 CF AI Foundation model' / 'Data' / '00 In Vitro RAW' / 'converted_anndata' / 'scGPT_multispecies_training_corpus.h5ad'
 
 if not data_file.exists():
     print(f"Error: Data file not found: {data_file}")

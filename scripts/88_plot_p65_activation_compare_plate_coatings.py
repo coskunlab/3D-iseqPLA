@@ -28,12 +28,34 @@ sns.set(font_scale=1.5)
 # ## 1. Setup Directories and Load Comparison Metadata
 
 # %%
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
+# Helper function to strip absolute path prefixes
+STRIP_PREFIXES = [
+    r'Y:\coskun-lab\Nicky\\',
+    r'Y:/coskun-lab/Nicky/',
+    r'/coskun-lab/Nicky/',
+]
+
+def strip_prefix(path_str):
+    """Strip known absolute prefixes to get relative path."""
+    path_normalized = str(path_str).replace('\\', '/')
+    for prefix in STRIP_PREFIXES:
+        prefix_normalized = prefix.replace('\\', '/')
+        if path_normalized.startswith(prefix_normalized):
+            return path_normalized[len(prefix_normalized):]
+    return path_str
+
 # --- USER INPUTS ---
 # Path to the comparison Excel file
-comparison_file = r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\08 compare plate coatings\01_compare_plate_coatings.xlsx"
+comparison_file = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '08 compare plate coatings' / '01_compare_plate_coatings.xlsx'
 
 # Output directory for plots
-plot_output_dir = Path(r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\08 compare plate coatings\01 PNG plots")
+plot_output_dir = FIGURES_ROOT / '88_plot_p65_activation_compare_plate_coatings'
 plot_output_dir.mkdir(exist_ok=True, parents=True)
 
 print(f"Plots will be saved to: {plot_output_dir}")
@@ -175,8 +197,11 @@ all_plates_data = []
 for idx, row in comparison_df.iterrows():
     plate_number = row['Plate number']
     coating = row['Coating']
-    pkl_path = Path(row['PklPath'])
-    layout_file = row['LayoutFile']
+    # Transform absolute paths to relative paths
+    pkl_path_rel = strip_prefix(row['PklPath'])
+    pkl_path = DATA_ROOT / pkl_path_rel
+    layout_file_rel = strip_prefix(row['LayoutFile'])
+    layout_file = DATA_ROOT / layout_file_rel
 
     print(f"\n{'='*60}")
     print(f"Processing Plate {plate_number} - Coating: {coating}")

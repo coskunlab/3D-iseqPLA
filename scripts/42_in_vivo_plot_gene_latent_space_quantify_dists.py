@@ -42,15 +42,21 @@ except ImportError as e:
     print(f"Error importing scGPT: {e}")
     sys.exit(1)
 
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # Configuration
 SEED = 42
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Paths
-model_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Models/scGPT/invivo')
-data_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Data')
+model_dir = DATA_ROOT / '71 CF AI Foundation model' / 'Models' / 'scGPT' / 'invivo'
+data_dir = DATA_ROOT / '71 CF AI Foundation model' / 'Data'
 select_genes_file = data_dir / '01_select_genes.txt'
-plot_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Figures/invivo_gene_latent_space')
+plot_dir = FIGURES_ROOT / '42_in_vivo_plot_gene_latent_space_quantify_dists'
 plot_dir.mkdir(parents=True, exist_ok=True)
 
 # Model configuration (must match training)
@@ -93,7 +99,7 @@ print("Loading Gene Vocabulary from Training")
 print("="*100)
 
 # Load the gene vocabulary that was used during training
-vocab_path = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Data/Prepared_for_Training/gene_vocab.pkl')
+vocab_path = DATA_ROOT / '71 CF AI Foundation model' / 'Data' / 'Prepared_for_Training' / 'gene_vocab.pkl'
 print(f"Loading vocabulary from: {vocab_path}")
 
 with open(vocab_path, 'rb') as f:
@@ -119,7 +125,7 @@ print(chr(92) + 'n' + '='*100)
 print('Loading Expression Data for Analysis')
 print('='*100)
 
-data_file = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Data/00 In Vitro RAW/converted_anndata/scGPT_multispecies_training_corpus.h5ad')
+data_file = DATA_ROOT / '71 CF AI Foundation model' / 'Data' / '00 In Vitro RAW' / 'converted_anndata' / 'scGPT_multispecies_training_corpus.h5ad'
 if not data_file.exists():
     print('Warning: Data file not found')
     adata = None

@@ -29,15 +29,21 @@ sns.set_context("notebook", font_scale=1.5)
 # ## 1. Setup Directories and Load Plate Layout
 
 # %%
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # --- USER INPUTS ---
 # Path to the plate layout Excel file
-layout_file = r"Y:\coskun-lab\Nicky\49 Cystic Fibrosis - Rabin\Data\24 well plate 006C\Plate006C_layout.xlsx"
+layout_file = DATA_ROOT / '49 Cystic Fibrosis - Rabin' / 'Data' / '24 well plate 006B' / 'Plate006B_layout.xlsx'
 
 # Path to PKL files directory
-pkl_path = Path(r"Y:\coskun-lab\Nicky\49 Cystic Fibrosis - Rabin\Data\24 well plate 006C\29Dec2025 cycle 1 IF\09 PKL single cell")
+pkl_path = DATA_ROOT / '49 Cystic Fibrosis - Rabin' / 'Data' / '24 well plate 006B' / '29Dec2025 cycle 1 IF' / '09 PKL single cell'
 
 # Output directory for plots
-plot_output_dir = Path(r"Y:\coskun-lab\Nicky\49 Cystic Fibrosis - Rabin\Data\24 well plate 006C\29Dec2025 cycle 1 IF\10 PNG plots")
+plot_output_dir = FIGURES_ROOT / '006B_fibroblast_only_coculture'
 plot_output_dir.mkdir(exist_ok=True, parents=True)
 
 print(f"PKL files directory: {pkl_path}")

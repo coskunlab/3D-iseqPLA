@@ -48,13 +48,19 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', line_buffering=True)
     sys.stderr.reconfigure(encoding='utf-8', line_buffering=True)
 
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # Configuration
-WANDB_API_KEY = "261a9172a7233d8b283ce5e9ec99ea601a59bbd3"
+WANDB_API_KEY = os.environ.get('WANDB_API_KEY', '')
 WANDB_PROJECT = "scGPT-invivo-health-disease"
 WANDB_ENTITY = None  # Will use default
 
-# Paths - Windows compatible
-base_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model')
+# Paths
+base_dir = DATA_ROOT / '71 CF AI Foundation model'
 data_dir = base_dir / 'Data' / '00 In Vivo RAW'
 annotations_path = data_dir / 'health_disease_annotations.csv'
 prepared_data_dir = base_dir / 'Data' / 'Prepared_for_Training'

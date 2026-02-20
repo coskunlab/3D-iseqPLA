@@ -36,15 +36,21 @@ except ImportError as e:
     print(f"Error importing scGPT: {e}")
     sys.exit(1)
 
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # Configuration
 SEED = 42
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Paths
-model_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Models/scGPT/multispecies')
-data_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Data')
+model_dir = DATA_ROOT / '71 CF AI Foundation model' / 'Models' / 'scGPT' / 'multispecies'
+data_dir = DATA_ROOT / '71 CF AI Foundation model' / 'Data'
 select_genes_file = data_dir / '01_select_genes.txt'
-plot_dir = Path('Y:/coskun-lab/Nicky/71 CF AI Foundation model/Figures/gene_latent_space')
+plot_dir = FIGURES_ROOT / '38_plot_gene_latent_space_highlight'
 plot_dir.mkdir(parents=True, exist_ok=True)
 
 # Model configuration (must match training)
@@ -79,7 +85,7 @@ print("="*100)
 print("Loading Training Data")
 print("="*100)
 
-data_file = Path('/coskun-lab/Nicky/71 CF AI Foundation model/Data/00 In Vitro RAW/converted_anndata/scGPT_multispecies_training_corpus.h5ad')
+data_file = DATA_ROOT / '71 CF AI Foundation model' / 'Data' / '00 In Vitro RAW' / 'converted_anndata' / 'scGPT_multispecies_training_corpus.h5ad'
 
 if not data_file.exists():
     print(f"Error: Data file not found: {data_file}")

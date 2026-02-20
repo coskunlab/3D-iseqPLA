@@ -1,0 +1,107 @@
+[OK] Successfully imported scGPT components
+====================================================================================================
+scGPT Multi-Species Model Performance Evaluation
+====================================================================================================
+Device: cuda
+Model directory: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Models\scGPT\multispecies
+Plot directory: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance
+
+====================================================================================================
+Loading Data and Creating Splits
+====================================================================================================
+Loading data from: scGPT_multispecies_training_corpus.h5ad
+  Cells: 31,915
+  Genes: 51,667
+Filtering genes: keeping 43,785 / 51,667
+Log-normalizing data...
+
+Creating train/val/test splits...
+[OK] Train: 22,340 cells
+[OK] Val:   4,787 cells
+[OK] Test:  4,788 cells
+
+====================================================================================================
+Reconstructing Vocabulary
+====================================================================================================
+[OK] Vocabulary size: 43,787
+
+====================================================================================================
+Loading Trained Model
+====================================================================================================
+Loading checkpoint: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Models\scGPT\multispecies\best_model_epoch9.pt
+[OK] Model loaded successfully
+  Checkpoint epoch: 9
+  Validation accuracy: 0.7860
+
+====================================================================================================
+Evaluating Model Performance
+====================================================================================================
+
+Evaluating Train split...
+  Accuracy:  0.7940
+  F1 Score:  0.8061
+  Precision: 0.8701
+  Recall:    0.7940
+  AUC:       0.9492
+  Confusion Matrix:
+    [[ 5583   260]
+ [ 4341 12152]]
+
+Evaluating Validation split...
+  Accuracy:  0.7860
+  F1 Score:  0.7987
+  Precision: 0.8680
+  Recall:    0.7860
+  AUC:       0.9426
+  Confusion Matrix:
+    [[1198   53]
+ [ 971 2562]]
+
+Evaluating Test split...
+  Accuracy:  0.7788
+  F1 Score:  0.7919
+  Precision: 0.8588
+  Recall:    0.7788
+  AUC:       0.9395
+  Confusion Matrix:
+    [[1173   79]
+ [ 979 2553]]
+
+====================================================================================================
+Creating Performance Plots
+====================================================================================================
+[OK] Saved: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance\model_performance_all_metrics.png
+[OK] Saved: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance\model_performance_individual_metrics.png
+[OK] Saved: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance\confusion_matrices.png
+[OK] Saved: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance\performance_heatmap.png
+
+====================================================================================================
+Saving Results
+====================================================================================================
+[OK] Saved summary: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance\model_performance_summary.csv
+[OK] Saved Train report: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance\classification_report_train.csv
+[OK] Saved Validation report: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance\classification_report_validation.csv
+[OK] Saved Test report: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance\classification_report_test.csv
+
+====================================================================================================
+EVALUATION COMPLETE
+====================================================================================================
+
+All plots saved to: Y:\coskun-lab\Nicky\71 CF AI Foundation model\Figures\in_vitro_model_performance
+
+Summary:
+
+Train Split:
+  Accuracy:  0.7940
+  F1 Score:  0.8061
+  AUC-ROC:   0.9492
+
+Validation Split:
+  Accuracy:  0.7860
+  F1 Score:  0.7987
+  AUC-ROC:   0.9426
+
+Test Split:
+  Accuracy:  0.7788
+  F1 Score:  0.7919
+  AUC-ROC:   0.9395

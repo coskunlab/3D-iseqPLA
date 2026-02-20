@@ -60,15 +60,24 @@ import psutil
 # # directories and inputs
 
 # %%
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 #%% directories - USER INPUTS
 # read EXCEL file for channel info
-channels = pd.read_excel(r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\01-3T3 P11 24 well plate 021\1Jan2026_Plate021_multiplex.xlsx")
-# channels = pd.read_excel(input('Enter the path to the excel file: '))
+channels_excel = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '01-3T3 P11 24 well plate 021' / '1Jan2026_Plate021_multiplex.xlsx'
+channels = pd.read_excel(channels_excel)
 channels.dropna(subset = ['StitchPath'], inplace=True)
 print(channels)
 
-# latest cycle acquisition folder
-basePath = Path(channels['StitchPath'].iloc[-1]).parent
+# Extract cycle folder name from StitchPath
+stitchPath = Path(channels['StitchPath'].iloc[-1])
+cycleFolderName = stitchPath.parent.name
+# Construct base path relative to DATA_ROOT
+basePath = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '01-3T3 P11 24 well plate 021' / cycleFolderName
 
 # folder of registered TIFs in ZYX
 sigPath = Path(basePath, '08 TIF registered 3D volumes')
@@ -91,8 +100,8 @@ fijiCsvPath = fijiWorkflowPath
 # --- END NEW FOLDER ---
 
 # folder to save supercomplex plots
-plotPath = Path(basePath, '16 PNG plots supercomplexes')
-plotPath.mkdir(exist_ok=True)
+plotPath = FIGURES_ROOT / '100_measure_supercomplex_sizes'
+plotPath.mkdir(exist_ok=True, parents=True)
 
 csvFile = [f for f in basePath.glob('*.csv')]
 assert len(csvFile) == 1
@@ -683,7 +692,7 @@ else:
         sys.exit(1)
     
     # Load plate layout (should be in the same directory as the channels Excel file)
-    channels_excel_dir = Path(r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\01-3T3 P11 24 well plate 021")
+    channels_excel_dir = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '01-3T3 P11 24 well plate 021'
     layout_path = channels_excel_dir / 'Plate021_layout.xlsx'
     
     def parse_layout(layout_file_path):

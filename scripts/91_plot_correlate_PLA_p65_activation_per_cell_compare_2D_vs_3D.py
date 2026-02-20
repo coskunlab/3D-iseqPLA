@@ -17,22 +17,32 @@ import re
 # First, we'll define the paths to our input files, including the channels file to locate the data and the plate layout file to map wells to experimental conditions.
 
 # %%
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # --- USER INPUTS ---
 # Path to the channels Excel file (used to find the base data path)
-channels_path = r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\01-3T3 P8 24 well plate 015\17Oct2025_Plate015_multiplex_cycles1,4,5,6.xlsx"
+channels_path = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '01-3T3 P8 24 well plate 015' / '17Oct2025_Plate015_multiplex_cycles1,4,5,6.xlsx'
 # Path to the plate layout file
-layout_path = r"Y:\coskun-lab\Nicky\48 NFkB gradient on chip\Data\01-3T3 P8 24 well plate 015\Plate015_layout.xlsx"
+layout_path = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '01-3T3 P8 24 well plate 015' / 'Plate015_layout.xlsx'
 
 # --- DERIVED PATHS ---
 try:
     channels = pd.read_excel(channels_path)
     channels.dropna(subset=['StitchPath'], inplace=True)
-    basePath = Path(channels['StitchPath'].iloc[-1]).parent
+    # Extract cycle folder name from StitchPath
+    stitchPath = Path(channels['StitchPath'].iloc[-1])
+    cycleFolderName = stitchPath.parent.name
+    # Construct path relative to DATA_ROOT
+    basePath = DATA_ROOT / '48 NFkB gradient on chip' / 'Data' / '01-3T3 P8 24 well plate 015' / cycleFolderName
     # This is the folder containing the PKL files from Script 71
     pklPath = basePath / '10 PKL single cell'
     # This is the folder where plots will be saved
-    plotPath = basePath / '11 PNG plots'
-    plotPath.mkdir(exist_ok=True)
+    plotPath = FIGURES_ROOT / '91_plot_correlate_PLA_p65_activation_per_cell_compare_2D_vs_3D'
+    plotPath.mkdir(exist_ok=True, parents=True)
     assert pklPath.exists(), f"PKL path not found: {pklPath}"
     print(f"Found PKL data path: {pklPath}")
     print(f"Plots will be saved to: {plotPath}")
@@ -41,8 +51,8 @@ except Exception as e:
     print("Please ensure the channels Excel file path is correct.")
     pklPath = Path('./10_PKL_single_cell_dummy')
     pklPath.mkdir(exist_ok=True)
-    plotPath = Path('./11_PNG_plots_dummy')
-    plotPath.mkdir(exist_ok=True)
+    plotPath = FIGURES_ROOT / '91_plot_correlate_PLA_p65_activation_per_cell_compare_2D_vs_3D'
+    plotPath.mkdir(exist_ok=True, parents=True)
 
 
 # %% [markdown]

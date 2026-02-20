@@ -49,14 +49,20 @@ except ImportError:
     print("Warning: wandb not installed. Training will proceed without logging.")
     WANDB_AVAILABLE = False
 
+# Setup paths relative to project root
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+DATA_ROOT = PROJECT_ROOT / 'data'
+FIGURES_ROOT = PROJECT_ROOT / 'figures'
+
 # Configuration
-WANDB_API_KEY = "261a9172a7233d8b283ce5e9ec99ea601a59bbd3"
+WANDB_API_KEY = os.environ.get('WANDB_API_KEY', '')
 WANDB_PROJECT = "scGPT-multispecies-classification"
 WANDB_ENTITY = None
 
 # Paths
-data_file = Path('/coskun-lab/Nicky/71 CF AI Foundation model/Data/00 In Vitro RAW/converted_anndata/scGPT_multispecies_training_corpus_v2.h5ad')
-save_dir = Path('/coskun-lab/Nicky/71 CF AI Foundation model/Models/scGPT/multispecies')
+data_file = DATA_ROOT / '71 CF AI Foundation model' / 'Data' / '00 In Vitro RAW' / 'converted_anndata' / 'scGPT_multispecies_training_corpus_v2.h5ad'
+save_dir = DATA_ROOT / '71 CF AI Foundation model' / 'Models' / 'scGPT' / 'multispecies'
 save_dir.mkdir(parents=True, exist_ok=True)
 
 # Training hyperparameters
