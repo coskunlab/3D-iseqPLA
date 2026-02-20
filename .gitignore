@@ -1,3 +1,4 @@
 /scripts/00_gather_figures_data.py
 /scripts/PLAN_00_gather_figures_data.md
-/data/
+/data/*
+!/data/.gitkeep
